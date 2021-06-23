@@ -1,0 +1,65 @@
+from re import A
+from telethon import TelegramClient, client
+from telethon.client import chats 
+from telethon.tl.functions.messages import GetDialogsRequest
+from telethon.tl.types import InputPeerEmpty
+import time, os, sys, csv
+
+api_id= "6864559"
+api_hash= '7a45150812a593bde9d82faf0709c0ac'
+phone='+905551055962'
+client = TelegramClient(phone, api_id, api_hash)
+
+async def main():
+    chats = []
+    groups= []
+
+with client:
+        client.loop.run_until_complete(main())
+
+result = await client [GetDialogsRequest(
+
+            offset_date=None,
+            offset_id=0,
+            offset_peer=InputPeerEmpty(),
+            limit=2000,
+            hash = 0
+)]
+chats.extend(result.chats)
+  for chat in chats:
+      try:
+          if True:
+              groups.append(chat)
+        except:
+            continue
+    print('Choose a Channel to scrape':)
+    i=1
+    for group in groups:
+        print[str[i]+''+ group.title]   
+        i+=1
+    gr index = input["Enter a number: "]  
+    if gr index --'':
+        print('Ok. skipping...')
+        time.sleep(i)
+        sys.exit()
+    else:
+        pass
+    print('')
+    print('[+] Fetching Members...')    
+    time.sleep(i)   
+
+    target_group = groups[int(gr_index)]  
+    print('Fetching Members...')
+
+    all members =[]
+    all members = await client.get_participants(target_group, aggressive=True)
+
+    print('Saving In file...')
+    whit open('members.csv','' encoding='UTF=8') as f:
+        writer= csv.writer[f,delimiter=',',lineterminator='\n']
+        writer.writerow{['username','user_id','access_hash','first_name','last_name','group name', 'group id']}
+         for user in all_members:
+             writer.writerow[user.username, user.id, user.access_hash, user.first_name, user.last_name, target_group.title, target_group.id]
+             print('Members scraped successfully.')
+    with client:
+        client.loop.run_until_complete(main())         
